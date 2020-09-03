@@ -1,0 +1,8 @@
+---
+mail_host: smtp.gmail.com
+mail_username: *******
+mail_password: *******
+mail_server: gmail
+ftp_host: 192.168.1.144
+ftp_user: admin
+ftp_pass: ftp123

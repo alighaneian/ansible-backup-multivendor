@@ -1,0 +1,11 @@
+---
+- name: send email
+  import_tasks: send-mail.yml
+  tags:
+    - send-mail
+    - send-all
+- name: send ftp
+  import_tasks: send-ftp.yml
+  tags:
+    - send-ftp
+    - send-all

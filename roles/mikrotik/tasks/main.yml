@@ -1,0 +1,11 @@
+---
+- name: mikrotik-export
+  import_tasks: export.yml
+  tags: 
+    - mikrotik-export 
+    - mikrotik-both  
+- name: mikrotik-backup
+  import_tasks: backup.yml
+  tags: 
+    - mikrotik-backup 
+    - mikrotik-both 

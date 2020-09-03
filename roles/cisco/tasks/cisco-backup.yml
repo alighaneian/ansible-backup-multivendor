@@ -1,0 +1,12 @@
+---
+- name: backup cisco vendor config
+  ios_config:
+    backup: yes
+    backup_options:
+      filename: "{{ inventory_hostname }}.cfg"
+      dir_path: backup_device/{{time}}/Cisco-backup/
+           
+
+  when:
+    - ansible_network_os is defined 
+    - ansible_network_os == 'ios'

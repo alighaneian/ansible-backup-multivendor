@@ -1,0 +1,5 @@
+---
+- hosts: mikrotik
+  remote_user: root
+  roles:
+    - mikrotik

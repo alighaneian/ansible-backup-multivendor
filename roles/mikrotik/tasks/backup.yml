@@ -1,0 +1,59 @@
+---
+
+    - name: 
+      
+      routeros_command:
+        commands: /system backup save name="{{ inventory_hostname }}" encryption=aes-sha256 password="{{ ansible_ssh_pass }}"
+
+      when: 
+        - ansible_network_os is defined 
+        - ansible_network_os == 'routeros'
+
+
+
+    - local_action:
+        module: ftp
+        host: "{{ ansible_host }}"
+        user: "{{ ansible_user }}"
+        password: "{{ ansible_ssh_pass }}"
+        src: /{{ inventory_hostname }}.backup
+        dest: backup_device
+        direction: pull
+
+      when: 
+        - ansible_network_os is defined 
+        - ansible_network_os == 'routeros'
+
+
+        
+        
+    - name: 
+      
+      routeros_command:
+        commands: /file remove {{ inventory_hostname }}.backup
+        
+      when: 
+        - ansible_network_os is defined 
+        - ansible_network_os == 'routeros'
+
+
+        
+
+    - name: Create a directory 
+      file:
+        path: backup_device/{{time}}/MikroTik/BACKUP
+        state: directory
+        mode: '0644'
+      run_once: true
+
+
+    - name: Move backup files
+      command:  mv {{ inventory_hostname }}.backup backup_device/{{time}}/MikroTik/BACKUP/{{ inventory_hostname }}.backup
+
+
+
+
+      when: 
+        - ansible_network_os is defined 
+        - ansible_network_os == 'routeros'
+

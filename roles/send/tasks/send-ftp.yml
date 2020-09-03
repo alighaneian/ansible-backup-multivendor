@@ -1,0 +1,9 @@
+---
+- local_action:
+    module: ftp
+    host: "{{ ftp_host }}"
+    user: "{{ ftp_user }}"
+    password: "{{ ftp_pass }}"
+    src: backup_device/{{time}}.zip
+    dest: /
+    direction: push

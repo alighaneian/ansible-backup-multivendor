@@ -1,0 +1,11 @@
+---
+- name: send email backup to ali's account
+  mail:
+    host: "{{ mail_host }}"
+    port: 587
+    username: "{{ mail_username }}"
+    password: "{{ mail_password }}"
+    to: ali.ghaneian@gmail.com
+    subject: Ansible-report
+    body: backup has been successfully done.
+    attach: backup_device/{{time}}.zip

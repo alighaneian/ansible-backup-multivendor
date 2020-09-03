@@ -1,0 +1,37 @@
+---
+
+- name: backup fortinet vendor  config
+  fortiosconfig:
+   config: "system config backup"
+   action: "backup"
+   host:  "{{ ansible_host }}"
+   username: "{{ ansible_user }}"
+   password: "{{ ansible_ssh_pass }}"
+   vdom:  "root"
+   https: False
+   ssl_verify: False
+   config_parameters:
+    filename: "{{ inventory_hostname }}.conf"
+#    path: /root
+    # Specify global or vdom only backup ["global" | "vdom"].
+    scope: "global"
+  register: ali
+  when: 
+    - ansible_network_os is defined 
+    - ansible_network_os == 'fortios'
+#   - name: copy backup file 
+
+
+- name: Create a directory for fortigate backup
+  file:
+    path: backup_device/{{time}}/Fortinet-backup
+    state: directory
+  run_once: true
+
+- name: Move backup files
+  command:  mv {{ inventory_hostname }}.conf backup_device/{{time}}/Fortinet-backup/{{ inventory_hostname }}.conf
+
+  when: 
+    - ansible_network_os is defined 
+    - ansible_network_os == 'fortios'
+

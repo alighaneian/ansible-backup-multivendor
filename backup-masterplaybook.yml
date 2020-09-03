@@ -1,0 +1,54 @@
+---
+- name: first task
+  hosts: all
+  gather_facts: false
+  tasks: 
+  
+
+    - setup:
+        gather_subset:
+          - '!all'
+      run_once: true
+      tags:
+        - always
+
+    - set_fact: 
+        time: "{{ ansible_date_time.date }}&{{ ansible_date_time.time | replace(':', '-') }}"
+      run_once: true
+      tags:
+        - always
+
+    - import_role:
+        name: cisco
+
+    - import_role:
+        name: mikrotik
+
+    - import_role:
+        name: fortinet
+
+    - name: Create a zip archive 
+      archive:
+        path: backup_device/{{time}}
+        dest: backup_device/{{time}}.zip
+        format: zip
+      run_once: true
+
+      tags:
+        - always
+
+    - import_role:
+        name: send             
+      run_once: true
+
+
+
+    - name: remove backup directory
+      file:
+        path: backup_device/{{time}}
+        state: absent
+      run_once: true
+
+      tags:
+        - always
+

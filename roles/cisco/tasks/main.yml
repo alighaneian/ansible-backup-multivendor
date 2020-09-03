@@ -1,0 +1,5 @@
+---
+- name: cisco roles
+  import_tasks: cisco-backup.yml
+  tags:
+    - cisco-backup

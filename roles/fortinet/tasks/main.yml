@@ -1,0 +1,5 @@
+---
+- name: fortigate
+  import_tasks: fortigate-backup.yml
+  tags:
+    - fortigate-backup

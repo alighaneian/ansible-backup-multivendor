@@ -1,0 +1,7 @@
+---
+ansible_host: 192.168.88.108
+ansible_user: admin  
+ansible_ssh_pass: asd
+ansible_connection: local
+ansible_network_os: fortios
+ansible_python_interpreter: /usr/bin/python3

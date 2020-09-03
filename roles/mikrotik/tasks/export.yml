@@ -1,0 +1,28 @@
+---
+- name: export
+  routeros_command:
+    commands:
+      - /export
+  register: ex
+          
+  when:
+    - ansible_network_os is defined 
+    - ansible_network_os == 'routeros'
+
+
+- name: Create a directory for export files
+  file:
+    path: backup_device/{{time}}/MikroTik/EXPORT
+    state: directory
+  run_once: true
+    
+- name: save export files
+  copy:
+    content: "{{ ex.stdout|join('\n') }}"
+    dest: backup_device/{{time}}/MikroTik/EXPORT/{{ inventory_hostname }}.rsc
+    mode: '0644'
+        
+          
+  when:
+    - ansible_network_os is defined 
+    - ansible_network_os == 'routeros'
